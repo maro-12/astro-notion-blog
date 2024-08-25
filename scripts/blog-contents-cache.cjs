@@ -80,8 +80,6 @@ const getAllPages = async () => {
           if (err) {
             console.error(`exec error: ${err}`);
           }
-          console.log('stdout', stdout);
-          console.log('stderr', stderr);
           progressBar.increment();
           return resolve();
         });
