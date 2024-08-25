@@ -232,8 +232,10 @@ export async function getAllBlocksByBlockId(blockId: string): Promise<Block[]> {
   let results: responses.BlockObject[] = []
 
   if (fs.existsSync(`tmp/${blockId}.json`)) {
+    console.log('getAllBlocksByBlockId fileExists true')
     results = JSON.parse(fs.readFileSync(`tmp/${blockId}.json`, 'utf-8'))
   } else {
+    console.log('getAllBlocksByBlockId fileExists false')
     const params: requestParams.RetrieveBlockChildren = {
       block_id: blockId,
     }
@@ -777,8 +779,10 @@ async function _getTableRows(blockId: string): Promise<TableRow[]> {
   let results: responses.BlockObject[] = []
 
   if (fs.existsSync(`tmp/${blockId}.json`)) {
+    console.log('_getTableRows fileExists true')
     results = JSON.parse(fs.readFileSync(`tmp/${blockId}.json`, 'utf-8'))
   } else {
+    console.log('_getTableRows fileExists false')
     const params: requestParams.RetrieveBlockChildren = {
       block_id: blockId,
     }
@@ -842,8 +846,10 @@ async function _getColumns(blockId: string): Promise<Column[]> {
   let results: responses.BlockObject[] = []
 
   if (fs.existsSync(`tmp/${blockId}.json`)) {
+    console.log('_getColumns fileExists true')
     results = JSON.parse(fs.readFileSync(`tmp/${blockId}.json`, 'utf-8'))
   } else {
+    console.log('_getColumns fileExists false')
     const params: requestParams.RetrieveBlockChildren = {
       block_id: blockId,
     }
