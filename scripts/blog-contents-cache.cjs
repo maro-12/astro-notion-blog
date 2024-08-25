@@ -28,6 +28,7 @@ const getAllPages = async () => {
 
   let results = [];
   while (true) {
+    console.log('notion database params', params);
     const res = await notion.databases.query(params);
 
     results = results.concat(res.results);
