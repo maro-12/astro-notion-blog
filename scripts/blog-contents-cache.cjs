@@ -53,7 +53,9 @@ const getAllPages = async () => {
 };
 
 (async () => {
+  console.log('before getAllPages');
   const pages = await getAllPages();
+  console.log('after getAllPages');
 
   const concurrency = parseInt(process.env.CACHE_CONCURRENCY || '1', 10);
 
