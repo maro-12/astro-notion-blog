@@ -5,6 +5,8 @@ const { PromisePool } = require('@supercharge/promise-pool');
 
 const notion = new Client({ auth: process.env.NOTION_API_SECRET });
 
+const start = new Date();
+
 const getAllPages = async () => {
   const params = {
     database_id: process.env.DATABASE_ID,
@@ -54,25 +56,20 @@ const getAllPages = async () => {
 };
 
 (async () => {
-  console.log('before getAllPages');
   const pages = await getAllPages();
-  console.log('after getAllPages');
 
   const concurrency = parseInt(process.env.CACHE_CONCURRENCY || '1', 10);
 
-  console.log('before progressBar');
   const progressBar = new cliProgress.SingleBar(
     { stopOnComplete: true },
     cliProgress.Presets.shades_classic
   );
   progressBar.start(pages.length, 0);
-  console.log('after progressBar');
 
   await PromisePool.withConcurrency(concurrency)
     .for(pages)
     .process(async (page) => {
       return new Promise((resolve) => {
-        console.log('before command');
         const command = `NX_BRANCH=main npx nx run astro-notion-blog:_fetch-notion-blocks ${page.id} ${page.last_edited_time}`;
         const options = { timeout: 60000 };
 
@@ -85,4 +82,5 @@ const getAllPages = async () => {
         });
       });
     });
+  console.log(`@@@@@@@@@ ${new Date() - start}ms`);
 })();
